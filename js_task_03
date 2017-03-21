@@ -21,7 +21,7 @@
   -->
   </ul>
 
-  <button id="sort-btn" onclick="init()">排序</button>
+  <button id="sort-btn" >排序</button>
 
   <script type="text/javascript">
 
@@ -30,12 +30,17 @@
        读取id为source的列表，获取其中城市名字及城市对应的空气质量
        返回一个数组，格式见函数中示例
       **/
-      var data = [];
+      
       function getData() {
-         
+
           var sour = document.getElementById("source");
-          while (sour.hasChildNodes()) {
-           data.push(sour.childNodes)
+          var data = [];
+          var list = sour.getElementsByTagName("li");
+          for (var i = 0; i < list.length; i++) {
+              data[i] = list[i].innerText.split(':');
+              data[i][0] = data[i][0].substr(0,7);
+              var b = list[i].getElementsByTagName("b");
+              data[i][1] = b[0].innerHTML;
           }
           return data;
       }
@@ -45,15 +50,10 @@
       返回一个排序后的数组
       **/
       function sortAqiData(data) {
-          for (var i = 0; i < data.length(); i++)
-              for (var j = i + 1; j < data.length - 1; j++) 
-              {
-                  if (data[i] > data[j]) {
-                      t = data[i];
-                      data[i] = data[j];
-                      data[j] = t;
-                  }
-              }
+          data.sort(function (a, b) {
+              return b[1] - a[1];
+          }
+          );
               return data;     
       }
       /**
@@ -64,7 +64,7 @@
           var resor = document.getElementById("resort");
           for (var i = 0; i < data.length; i++) {
               var li = document.createElement("li");
-              var text = document.createTextNode(i + ":" + data[i][0] + ":" + data[i][1]);
+              var text = document.createTextNode("第"+(i+1) + "名:" + data[i][0]+":"+data[i][1]);
               li.appendChild(text);
               resor.appendChild(li);
           }
@@ -76,7 +76,18 @@
       }
       function init() {
           //给sort-btn绑定一个点击事件，点击时触发btnHandle函数
-          btnHandle();
+          // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
+          var btn = document.getElementById('sort-btn');
+          var click = true;
+          btn.onclick = function () {
+              if (click == true) {
+                  btnHandle();
+                  click = false
+              }
+              else {
+                  alert('排序已完成！');
+              }
+          }
       }
       init();
   </script>
