@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+    <title>IFE JavaScript Task 04</title>
+</head>
+<body>
+   <input  id="InputNum"/>
+   <button id="InLeft" onclick="LeftIn()">左侧入</button>
+   <button id="InRight" onclick="RightIn()">右侧入</button>
+   <button id="OutLeft" onclick="LeftOut()">左侧出</button>
+   <button id="OutRight" onclick="RightOut()">右侧出</button>
+   
+   <ul id="NumQueue">
+   <!--从左到右，表示从前往后排列-->
+   </ul>
+
+   <script type="text/javascript">
+       function getNum() {
+           var Num = document.getElementById("InputNum");
+           return Num.value;
+       }
+       function LeftIn() {
+           var NumQue = document.getElementById("NumQueue");
+           var list = NumQue.getElementsByTagName("li");
+           var li = document.createElement("li");
+           var Num = getNum();
+           var txt = document.createTextNode(Num);
+           li.appendChild(txt);
+           if (list.length == 0) {
+               NumQue.appendChild(li);
+           }
+           else {
+               for (var i = list.length-1; i >=0; i--) {
+                   list[i+1] = list[i];
+               }
+               NumQue.appendChild(li);
+           }
+       }
+       function RightIn() {
+           var NumQue = document.getElementById("NumQueue");
+           var li = document.createElement("li");
+           var Num = getNum();
+           var txt = document.createTextNode(Num);
+           li.appendChild(txt);
+           NumQue.appendChild(li);
+       }
+       function LeftOut() {
+            var queue= document.getElementById("NumQueue");
+            var list = queue.getElementsByTagName("li");
+            queue.removeChild(list[0]);
+       }
+       function RightOut() {
+
+           var queue = document.getElementById("NumQueue");
+           var list = queue.getElementsByTagName("li");
+           var len = list.length;
+           queue.removeChild(list[len-1]);
+       }
+
+   </script>
+</body>
+</html>
