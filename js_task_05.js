@@ -8,8 +8,9 @@
 
     function setDivHeight() {
         var item = document.createElement("div");
-        item.style.height = num + 'px';
-        item.innerHTML = num.value;
+        var li = document.createElement("li");
+        li.style.height = String((num.value) * 2) + "px";
+        item.appendChild(li);
         return item;
     }
     function Leftin() {
